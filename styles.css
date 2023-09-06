@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Play:wght@400;700&display=swap');
 body {
     margin: 0;
     overflow-x: hidden;
@@ -18,4 +19,54 @@ h1{
     background-color: transparent!important;
     color: #fff;
     position: absolute
+}
+
+#start-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0505058d;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s linear;
+}
+
+#btn-start {
+    background-color: transparent;
+    color: #7c7c7c;
+    outline: none;
+    border: none;
+    border: 2px solid #7c7c7c;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    font-family: 'Play', sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+#btn-start:hover {
+    color: #00d51c;
+    border-color: #00d51c;
+}
+
+.by {
+    position: absolute;
+    bottom: 8px;
+    color: #959595;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: #d4d4d4;
+    transition: all 0.3s linear;
+}
+
+a:hover{
+    color: #1381ff;
 }

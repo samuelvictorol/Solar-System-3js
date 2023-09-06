@@ -36,7 +36,7 @@ const moonMaterial = new THREE.MeshBasicMaterial({ map: moonTexture });
 const moon = new THREE.Mesh(moonGeometry, moonMaterial);
 
 // Criação do Sol
-const sunGeometry = new THREE.SphereGeometry(50,100, 100);
+const sunGeometry = new THREE.SphereGeometry(100,200, 200);
 const sunTexture = new THREE.TextureLoader().load('../assets/suntxt.png');
 const sunMaterial = new THREE.MeshBasicMaterial({ map: sunTexture });
 const sun = new THREE.Mesh(sunGeometry, sunMaterial);
@@ -79,7 +79,7 @@ const ring = new THREE.Mesh(ringGeometry, ringMaterial);
 ring.rotation.x = Math.PI / 4; // Rotação do anel para que fique na posição correta
 
 // Criação de Jupiter
-const jupiterGeometry = new THREE.SphereGeometry(100, 100, 772);
+const jupiterGeometry = new THREE.SphereGeometry(100, 100, 172);
 const jupiterTexture = new THREE.TextureLoader().load('../assets/jupitertxt.jpg');
 const jupiterMaterial = new THREE.MeshBasicMaterial({ map: jupiterTexture });
 const jupiter = new THREE.Mesh(jupiterGeometry, jupiterMaterial);
@@ -115,22 +115,32 @@ scene.add(uranus);
 scene.add(neptune);
 
 // Configuração da posição inicial
-sun.position.set(0, 0, -2250);
-mercurio.position.set(0, 0, -2100);
-venus.position.set(0, 0, -1950);
-moon.position.set(-4, 16, -1240);
-earth.position.set(10, 3, -1050);
-mars.position.set(0, 0, -650);
-jupiter.position.set(-4, 1, -500);
-ring.position.set(0, 0, -140);
-saturn.position.set(0, 0, -140);
-uranus.position.set(0, 0, -40);
-neptune.position.set(0, 0, -12);
+const setInitialPosition = () => {
+  sun.position.set(0, 0, -1550);
+  mercurio.position.set(0, 0, -1345);
+  venus.position.set(50, 0, -1150);
+  moon.position.set(-10, 35, -1040);
+  earth.position.set(10, 3, -950);
+  mars.position.set(0, 0, -550);
+  jupiter.position.set(-4, 1, -500);
+  ring.position.set(0, 0, -140);
+  saturn.position.set(0, 0, -140);
+  uranus.position.set(0, 0, -40);
+  neptune.position.set(0, 0, -12);
+}
 
-const moveMoon = (event) => {
-  // Movimentação da lua
-  if (event.keyCode === 38) {
-    neptune.position.z += 0.05;
+setInitialPosition();
+
+const startTrip = () => {
+  const startcontainer = document.getElementById('start-container');
+  startcontainer.style.display = 'none';
+  let step = 0;
+
+  const movePlanets = () => {
+    if (step >= 10000) {
+      return; // Condição de parada
+    }
+    neptune.position.z += 0.01;
     neptune.position.x -= 0.3;
     uranus.position.z += 0.2;
     uranus.position.y += 0.05;
@@ -148,31 +158,30 @@ const moveMoon = (event) => {
     jupiter.position.z += .6;
     jupiter.position.x += 0.1;
     jupiter.position.y += 0.5;
-    mars.position.z += .8;
-    mars.position.y += 0.1;
-    mars.position.x += 0.05;
-    mercurio.position.z += 1.8;
+    mars.position.z += .7;
+    mars.position.y -= 0.2;
+    mars.position.x += 0.09;
+    mercurio.position.z += 1.2;
     mercurio.position.x += 0.02;
     mercurio.position.y -= 0.1;
-    venus.position.z += .2;
-    venus.position.x -= 0.2;
-    // sol
-    sun.position.z += 1.5;
-  } else if (event.keyCode === 40) {
-    neptune.position.z -= 0.1;
-    if(neptune.position.z < -12){
-      alert('Sua nave bateu em um anão oO')
-      neptune.position.z = -12;
+    venus.position.z += 1.3;
+    venus.position.x += 0.2;
+    venus.position.y += 0.06;
+    sun.position.z += 1;
+    if (sun.position.z >= -400) {
+      startcontainer.style.display = 'flex';
+      step = 10000;
+      setInitialPosition();
+      return;
     }
+    step++;
+    setTimeout(movePlanets, 30); 
   }
+  movePlanets();
 }
 
-document.addEventListener('keydown', moveMoon);
-window.addEventListener('touchstart', () => {
-    moon.position.z += 1;
-    earth.position.z += 1;
-    sun.position.z += 10;
-});
+const start = document.getElementById('btn-start');
+start.addEventListener('click', startTrip)
 
 // Configuração da velocidade de rotação da lua
 const moonRotationSpeed = 0.002; // Ajuste conforme necessário
