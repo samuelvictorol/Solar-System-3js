@@ -1,4 +1,4 @@
-import * as THREE from '/three';
+import * as THREE from 'three';
 
 // Configuração da cena, câmera e renderizador
 const scene = new THREE.Scene();
